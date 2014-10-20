@@ -12,9 +12,7 @@ Send push notification to a mobile device to test implementation.
 
 ## How to run
 
+	npm install
 	node index.js
-		
+
 Then open [http://localhost:3000/](http://localhost:3000/)
-
-
-

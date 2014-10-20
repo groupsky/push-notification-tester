@@ -8,10 +8,6 @@ var apn = require('apn');
 var exphbs  = require('express-handlebars');
 var crypto = require('crypto');
 
-process.env.DEBUG_COLORS = 'no';
-var debug = require('debug');
-debug.enable('apn');
-
 app.use(multer({
   // inMemory: true
 }));
