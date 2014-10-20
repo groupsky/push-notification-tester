@@ -1,8 +1,8 @@
-= Push Notification Tester
+# Push Notification Tester
 
 Send push notification to a mobile device to test implementation.
 
-== Supported platforms
+## Supported platforms
 
 * Apple Push Notification Service
 * [TBA] Google Cloud Messaging
@@ -10,11 +10,11 @@ Send push notification to a mobile device to test implementation.
 * [TBA] Amazon Simple Notification Service
 * [TBA] Amazon Device Messaging
 
-== How to run
+## How to run
 
-		node index.js
+	node index.js
 		
-Then open http://localhost:3000/
+Then open [http://localhost:3000/](http://localhost:3000/)
 
 
 
