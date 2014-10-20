@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+  <title>Socket.IO chat</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <style>
+  </style>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <!-- // <script src="/socket.io/socket.io.js"></script> -->
+  <script>
+  $(function (){
+    // var socket = io();
+    // $('form').submit(function(){
+    //   socket.emit('chat message', $('#m').val());
+    //   $('#m').val('');
+    //   return false;
+    // });
+    // socket.on('chat message', function(msg){
+    //   $('#messages').append($('<li>').text(msg));
+    // });
+  });
+  </script>
+</head>
+<body>
+  <section id="apn">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-wrap">
+            <form class="form-horizontal" action="/send" method="post" enctype="multipart/form-data">
+              <fieldset>
+
+                <!-- Form Name -->
+                <legend>APN Tester</legend>
+
+                <!-- Private Key -->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="privatekey">Private key</label>
+                  <div class="col-md-8">
+                    <input id="privatekey" name="privatekey" class="input-file" type="file">
+                  </div>
+                </div>
+
+                <!-- Certificate -->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="certificate">Certificate</label>
+                  <div class="col-md-8">
+                    <input id="certificate" name="certificate" class="input-file" type="file">
+                  </div>
+                </div>
+
+                <!-- Device token -->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="alert">Device Token</label>
+                  <div class="col-md-8">
+                    <input id="device" name="device" type="text" placeholder="Device Token" class="form-control input-md">
+                    <span class="help-block">Device token obtained through
+                      <code><a href="https://developer.apple.com/library/ios/documentation/uikit/reference/uiapplicationdelegate_protocol/index.html#//apple_ref/occ/intfm/UIApplicationDelegate/application:didRegisterForRemoteNotificationsWithDeviceToken:" target="_blank">-application:didRegisterForRemoteNotificationsWithDeviceToken:</a></code>
+                      and converted to hex
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Message -->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="alert">Alert</label>
+                  <div class="col-md-8">
+                    <input id="alert" name="alert" type="text" placeholder="Alert message" class="form-control input-md">
+                    <span class="help-block">Message to be shown on the notification</span>
+                  </div>
+                </div>
+
+                <!-- Badge number -->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="badge">Badge</label>
+                  <div class="col-md-8">
+                    <div class="input-group">
+                      <input id="badge" name="badge" class="form-control" type="number" min="1" placeholder="Badge number">
+                      <span class="input-group-addon">
+                        <input type="checkbox">
+                      </span>
+                    </div>
+                    <p class="help-block">The badge number</p>
+                  </div>
+                </div>
+
+                <!-- Payload -->
+                <div class="form-group">
+                  <label class="col-md-3 control-label" for="payload">Payload</label>
+                  <div class="col-md-8">
+                    <textarea class="form-control" id="payload" name="payload" rows="10">{
+  'messageFrom': 'Push Notification Tester'
+}</textarea>
+                  </div>
+                </div>
+
+                <!-- Send -->
+                <div class="form-group">
+                  <div class="col-md-8 col-md-offset-3">
+                    <button id="sendbutton" name="sendbutton" class="btn btn-primary pull-right">Send</button>
+                  </div>
+                </div>
+
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
