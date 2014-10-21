@@ -7,6 +7,7 @@ var multer  = require('multer')
 var apn = require('apn');
 var exphbs  = require('express-handlebars');
 var crypto = require('crypto');
+var errors = require('./lib/errors');
 
 app.use(multer({
   // inMemory: true
@@ -37,7 +38,15 @@ app.post('/send', function(req, res){
     var log = function() {
       console.log.apply(console, arguments);
       var args = Array.prototype.slice.call(arguments);
-      args.unshift('log');
+      var msg = "";
+      args.forEach(function(arg){
+        if (typeof arg === "object") {
+          arg = util.inspect(arg);
+        }
+        if (msg.length > 0) msg += " ";
+        msg += arg;
+      });
+      args = ["log", msg];
       if (Object.keys(nsp.connected).length == 0) {
         logs.push(args);
       }
@@ -50,8 +59,18 @@ app.post('/send', function(req, res){
       cert: req.files.certificate.path,
       key: req.files.privatekey.path
     };
-    var service = new apn.Connection(opts);
-    var feedback = new apn.Feedback(opts);
+    try {
+      var service = new apn.Connection(opts);
+    } catch (err) {
+      log("Exception while creating connection: ", err);
+      return;
+    }
+    try {
+      var feedback = new apn.Feedback(opts);
+    } catch (err) {
+      log("Exception while creating feedback: ", err);
+      return;
+    }
 
 
     nsp.on('connection', function(socket){
@@ -78,10 +97,10 @@ app.post('/send', function(req, res){
       log("Notification transmitted to: "+device.token.toString('hex')+"\n\n");
     });
     service.on('transmissionError', function(errCode, notification, device) {
-      log("Notification caused error: " + errCode + " for device " + device.token.toString('hex') + "\n" + JSON.stringify(notification)+"\n\n");
-      if (errCode == 8) {
-        log("A error code of 8 indicates that the device token is invalid. This could be for a number of reasons - are you using the correct environment? i.e. Production vs. Sandbox\n\n\n");
-      }
+      log(errors.describe('apns', 'transmissionError', errCode, {errCode: errCode, notification: notification, device: device}));
+      // log("Notification caused error: " + errCode + " for device " + (device?device.token.toString('hex'):device));
+      // log("Notification =", notification);
+      // log("<strong>Error description</strong>:", errors['transmissionError'][errCode]);
     });
     service.on('timeout', function () {
       log('Timed out');
@@ -97,9 +116,10 @@ app.post('/send', function(req, res){
     });
     feedback.on('error', function(err) {
       log('Feedback error: ', err);
+      feedback.cancel();
     });
     feedback.on('feedbackError', function(err) {
-      log('feedback feedbackError: ', err);
+      log('Feedback connection error: ', err);
     });
     feedback.on('feedback', function(feedback) {
       if (feedback && typeof feedback === 'object' && Object.keys(feedback).length > 0)

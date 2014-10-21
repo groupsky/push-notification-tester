@@ -7,7 +7,14 @@
     "express": "^4.9.8",
     "express-handlebars": "^1.1.0",
     "fileupload": "^0.3.0",
+    "handlebars": "^2.0.0",
+    "hjson": "^1.0.2",
     "multer": "^0.1.6",
-    "socket.io": "^1.1.0"
+    "socket.io": "^1.1.0",
+    "underscore.string": "^2.3.3"
+  },
+  "main": "./index.js",
+  "scripts": {
+    "start": "node index.js"
   }
 }

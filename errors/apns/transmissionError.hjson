@@ -1,0 +1,48 @@
+{
+  header:
+    '''
+    Notification caused error {{errCode}} for device {{toHexString device.token}}
+    <pre><code>{{json notification}}</code></pre>
+    '''
+  codes: {
+    0: No errors encountered
+    1:
+      {
+        code: Processing error
+        description: problem on Apple's side, not related to the token
+      }
+    2: Missing device token
+    3:
+      {
+        code: Missing topic
+        description: The topic is currently the bundle identifier of the target application on an iOS device.
+      }
+    4: Missing payload
+    5: Invalid token size
+    6: Invalid topic size
+    7: Invalid payload size
+    8:
+      {
+        code: Invalid token
+        description:
+          '''
+          A error code of 8 indicates that the device token is invalid.
+          This could be for a number of reasons - are you using the correct environment? i.e. Production vs. Sandbox
+          '''
+      }
+    10:
+      {
+        code: Shutdown
+        description: Probably Apple is shutting down server. Try again in some time.
+      }
+    256: None (unknown)
+    512: retryLimitExceeded
+    513:
+      {
+        code: moduleInitialisationFailed
+        description: Most likely bad certificate and/or private key
+      }
+    514: connectionRetryLimitExceeded
+    515: connectionTerminated
+  }
+}

@@ -1,6 +1,7 @@
 # Push Notification Tester
 
-Send push notification to a mobile device to test implementation.
+Send push notification to a mobile device to test implementation. The focus is on debugging the client side notification processing,
+rather than providing a rock-solid framework for sending push notifications.
 
 ## Supported platforms
 
